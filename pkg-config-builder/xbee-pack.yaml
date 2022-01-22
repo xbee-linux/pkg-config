@@ -1,0 +1,23 @@
+schema-version: 1.0
+
+type: builder
+
+const:
+  srcDir: /usr/src
+  exportDir: /opt/pkg-config
+
+provision:
+  - url:
+      from: https://pkgconfig.freedesktop.org/releases/pkg-config-{% version %}.tar.gz
+      todir: "{% srcDir %}"
+
+build:
+  - shell:
+      cmds:
+        - ./configure --prefix=/usr --with-internal-glib --disable-host-tool --docdir=/usr/share/doc/pkg-config-0.29.2
+        - make
+#        - make check
+        - make install DESTDIR={% exportDir %}
+      directory: "{% srcDir %}/pkg-config-{% version %}"
+  - export: "{% exportDir %}"
+
