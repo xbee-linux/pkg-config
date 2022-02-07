@@ -4,7 +4,9 @@ type: builder
 
 const:
   srcDir: /usr/src
-  exportDir: /opt/pkg-config
+
+out:
+  pkg-config: /opt/pkg-config
 
 provision:
   - url:
@@ -17,7 +19,7 @@ build:
         - ./configure --prefix=/usr --with-internal-glib --disable-host-tool --docdir=/usr/share/doc/pkg-config-0.29.2
         - make
 #        - make check
-        - make install DESTDIR={% exportDir %}
+        - make install DESTDIR={% pkg-config %}
       directory: "{% srcDir %}/pkg-config-{% version %}"
-  - export: "{% exportDir %}"
+
 
